@@ -15,7 +15,7 @@ export const twitterStrategy = () => {
   use(new Strategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-    callbackURL: '/oauth/callback',
+    callbackURL: '/api/oauth/callback',
     passReqToCallback: true
   }, (req: Request, token: string, tokenSecret: string, profile: Profile, cb: Function) => {
 

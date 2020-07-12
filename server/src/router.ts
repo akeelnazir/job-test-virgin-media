@@ -10,23 +10,23 @@ const router: Router = Router()
 router.use(logger('dev'))
 
 // Routes
-router.get('/', (req: Request, res: Response) => {
+router.get('/api', (req: Request, res: Response) => {
   res
     .status(OK)
     .send('OK')
 })
 
 router.get(
-  '/login',
-  authenticate('twitter', { successRedirect: '/user', failureRedirect: '/error' })
+  '/api/login',
+  authenticate('twitter', { successRedirect: '/api/user', failureRedirect: '/api/error' })
 )
 
 router.get(
-  '/logout',
+  '/api/logout',
   (req: Request, res: Response) => req.session.destroy((err: Error) => res.redirect('/'))
 )
 
-router.get('/user', ensureLoggedIn(), (req: Request, res: Response) => {
+router.get('/api/user', ensureLoggedIn(), (req: Request, res: Response) => {
 
   res
     .status(OK)
@@ -35,9 +35,9 @@ router.get('/user', ensureLoggedIn(), (req: Request, res: Response) => {
 })
 
 router.get(
-  '/oauth/callback',
-  authenticate('twitter', { failureRedirect: '/' }),
-  (req: Request, res: Response) => res.redirect('/user')
+  '/api/oauth/callback',
+  authenticate('twitter', { failureRedirect: '/api/error' }),
+  (req: Request, res: Response) => res.redirect('/api/user')
 )
 
 export default router

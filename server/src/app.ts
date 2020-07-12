@@ -3,7 +3,7 @@ import { Application } from 'express'
 
 import router from './router'
 import { notFound, errorHandler, middleware } from './middleware'
-import { passportConfig } from './passport/passport-config'
+import { passportConfig } from './passport'
 
 
 const app: Application = express()
