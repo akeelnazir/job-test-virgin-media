@@ -2,42 +2,74 @@ import * as logger from 'morgan'
 import { Router, Request, Response } from 'express'
 import { OK } from 'http-status-codes'
 import { authenticate } from 'passport'
+import { join } from 'path'
+import { config } from 'dotenv-safe'
 import { ensureLoggedIn } from 'connect-ensure-login'
 
+import { TwitterAPI } from './twitter/twitter-config'
+
+config({
+  example: join(__dirname, '.env.example'),
+  path: join(__dirname, '.env')
+})
+
+const uiLoginUrl = process.env.UI_LOGIN_URL
+const loginUrl = process.env.LOGIN_URL
+const logoutUrl = process.env.LOGOUT_URL
+const loginCallbackUrl = process.env.LOGIN_CALLBACK_URL
+const loginRedirectUrl = process.env.LOGIN_REDIRECT_URL
+const loginErrorUrl = process.env.LOGIN_ERROR_URL
+
+const twitterApi = new TwitterAPI()
 const router: Router = Router()
 
 // Basic logging for router events
 router.use(logger('dev'))
 
 // Routes
-router.get('/api', (req: Request, res: Response) => {
-  res
-    .status(OK)
-    .send('OK')
-})
+router.get(
+  '/api/health',
+  (req: Request, res: Response) => res.status(OK).send('OK'))
 
 router.get(
-  '/api/login',
-  authenticate('twitter', { successRedirect: '/api/user', failureRedirect: '/api/error' })
+  loginUrl,
+  authenticate('twitter', { successRedirect: loginRedirectUrl, failureRedirect: loginErrorUrl })
 )
 
 router.get(
-  '/api/logout',
-  (req: Request, res: Response) => req.session.destroy((err: Error) => res.redirect('/'))
+  logoutUrl,
+  (req: Request, res: Response) => req.session.destroy(() => res.redirect(uiLoginUrl))
 )
 
-router.get('/api/user', ensureLoggedIn(), (req: Request, res: Response) => {
-
-  res
-    .status(OK)
-    .json(req.user)
-
-})
+router.get(
+  loginRedirectUrl,
+  ensureLoggedIn({ redirectTo: loginUrl }),
+  (req: Request, res: Response) => res.status(OK).json(req.user))
 
 router.get(
-  '/api/oauth/callback',
-  authenticate('twitter', { failureRedirect: '/api/error' }),
-  (req: Request, res: Response) => res.redirect('/api/user')
+  '/api/tweets',
+  ensureLoggedIn({ redirectTo: loginUrl }),
+  (req: Request, res: Response) => {
+
+    const { user } = req
+
+    twitterApi
+      .getUserTimeline(
+        user['token'],
+        user['tokenSecret'],
+        req.user['id'],
+        (results: any[]) => {
+          res
+            .status(OK)
+            .json(results)
+        }
+      )
+  })
+
+router.get(
+  loginCallbackUrl,
+  authenticate('twitter', { failureRedirect: loginErrorUrl }),
+  (req: Request, res: Response) => res.redirect(loginRedirectUrl)
 )
 
 export default router
