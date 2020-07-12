@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <span>Contact Engine</span>
+      <span>Twitter Client</span>
     </mat-toolbar>
 
     <router-outlet></router-outlet>

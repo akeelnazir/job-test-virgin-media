@@ -4,17 +4,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { UiModule } from './shared/ui.module';
-import { SmsProviderModule } from './sms-provider/sms-provider.module';
+import { TwitterClientModule } from './twitter-client/twitter-client.module';
 
 import { AppComponent } from './app.component';
+import { LoginComponent} from './login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    SmsProviderModule,
+    TwitterClientModule,
     UiModule,
     BrowserAnimationsModule,
     AppRoutingModule
@@ -22,4 +24,5 @@ import { AppComponent } from './app.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

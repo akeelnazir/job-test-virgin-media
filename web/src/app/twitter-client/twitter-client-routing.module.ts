@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SmsProviderComponent } from './sms-provider.component';
+
+import { TwitterClientComponent } from './twitter-client.component';
 
 const routes: Routes = [
-  { path: '', component: SmsProviderComponent }
+  { path: 'twitter-client', component: TwitterClientComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SmsProviderRoutingModule {
+export class TwitterClientRoutingModule {
 }
