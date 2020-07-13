@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "contact-engine-web": {
+    "twitter-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/contact-engine-web",
+            "outputPath": "dist/twitter-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,19 +67,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "contact-engine-web:build",
+            "browserTarget": "twitter-client:build",
             "proxyConfig": "dev.proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "contact-engine-web:build:production"
+              "browserTarget": "twitter-client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "contact-engine-web:build"
+            "browserTarget": "twitter-client:build"
           }
         },
         "test": {
@@ -117,16 +117,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "contact-engine-web:serve"
+            "devServerTarget": "twitter-client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "contact-engine-web:serve:production"
+              "devServerTarget": "twitter-client:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "contact-engine-web"
+  "defaultProject": "twitter-client",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

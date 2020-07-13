@@ -8,6 +8,11 @@
 
     <mat-card-actions>
       <a mat-button href="/api/logout">Logout</a>
+
+      <mat-button-toggle-group name="sorting" value="created_at" (valueChange)="sortByKey($event)">
+        <mat-button-toggle value="created_at">Sort by date</mat-button-toggle>
+        <mat-button-toggle value="text">Sort A - Z</mat-button-toggle>
+      </mat-button-toggle-group>
     </mat-card-actions>
 
     <mat-card-content>

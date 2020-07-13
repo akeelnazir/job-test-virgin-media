@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { User } from '../../../../server/src/passport'
 import { Observable } from 'rxjs'
+
+import { Tweet } from './model'
+import { User } from '../../../../../server/src/passport'
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,8 @@ export class TwitterService {
     return this.http.get<User>('/api/user')
   }
 
-  getTweets(): Observable<any> {
-    return this.http.get<any>('/api/tweets')
+  getTweets(): Observable<Tweet[]> {
+    return this.http.get<Tweet[]>('/api/tweets')
   }
 
 }

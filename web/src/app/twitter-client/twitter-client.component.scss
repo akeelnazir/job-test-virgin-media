@@ -1,3 +1,17 @@
 .tweet-card {
   margin: 20px 0;
 }
+
+.mat-card-actions {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+}
+
+.mat-button {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
