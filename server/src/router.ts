@@ -6,6 +6,7 @@ import { join } from 'path'
 import { config } from 'dotenv-safe'
 import { ensureLoggedIn } from 'connect-ensure-login'
 
+import { User } from './passport'
 import { TwitterAPI } from './twitter/twitter-config'
 
 config({
@@ -44,7 +45,16 @@ router.get(
 router.get(
   loginRedirectUrl,
   ensureLoggedIn({ redirectTo: loginUrl }),
-  (req: Request, res: Response) => res.status(OK).json(req.user))
+  (req: Request, res: Response) => {
+    const safeUserObject: User = {
+      id: req.user['id'],
+      name: req.user['name'],
+      displayName: req.user['displayName'],
+      provider: req.user['provider']
+    }
+
+    res.status(OK).json(safeUserObject)
+  })
 
 router.get(
   '/api/tweets',
