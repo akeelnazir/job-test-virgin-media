@@ -43,7 +43,7 @@ router.get(
 )
 
 router.get(
-  loginRedirectUrl,
+  '/api/user',
   ensureLoggedIn({ redirectTo: loginUrl }),
   (req: Request, res: Response) => {
     const safeUserObject: User = {
