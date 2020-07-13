@@ -1,3 +1,25 @@
 <div class="container">
-  <p>Twitter</p>
+
+  <mat-card *ngIf="(user$ | async) as user" class="user-card">
+    <mat-card-header>
+      <mat-card-title>{{ user.displayName }}</mat-card-title>
+      <mat-card-subtitle>{{ user.name }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-actions>
+      <a mat-button href="/api/logout">Logout</a>
+    </mat-card-actions>
+
+    <mat-card-content>
+
+      <mat-card *ngFor="let tweet of tweets$ | async" class="tweet-card">
+        <mat-card-header>
+          <mat-card-title>{{ tweet.text }}</mat-card-title>
+          <mat-card-subtitle> {{ tweet.created_at | date }}</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+
+    </mat-card-content>
+
+  </mat-card>
 </div>
